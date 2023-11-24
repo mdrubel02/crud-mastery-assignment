@@ -4,13 +4,14 @@ import { UserServices } from "./user.service";
 
 const createUser = async (req : Request, res : Response)=>{
     const {user: userData} = req.body
+    console.log(userData)
     //will call service fun to send this data
     try {
-        const result = await UserServices.createUserIntoDB(userData);
+        const result = await UserServices.createUserIntoDB(userData)
         //send response
         res.status(200).json({
             success: true,
-            message: 'User is created succesfully',
+            message: 'User created succesfully!',
             data: result
         })
     } catch (error) {
