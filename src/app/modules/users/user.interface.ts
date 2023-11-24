@@ -12,8 +12,8 @@ export type UserAddress = {
 }
 
 export type UserOders = {
-    producNmae:string;
-    price: string;
+    productNmae:string;
+    price: number;
     quantity:number
 }[]
 
