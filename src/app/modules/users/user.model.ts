@@ -29,7 +29,7 @@ const userAddressSchema = new Schema<UserAddress>({
 })
 
 const userOrderSchema = new Schema({
-    productNmae: {
+    productName: {
         type: String,
     },
     price:{
@@ -75,7 +75,7 @@ const userOrderSchema = new Schema({
    },
    address: userAddressSchema,
    orders: {
-type:[userOrderSchema],}
+type:[userOrderSchema]}
 
 }) 
 
