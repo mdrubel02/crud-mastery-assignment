@@ -7,6 +7,6 @@ const createUserIntoDB = async (user : User)=>{
     return result
  }
 
- export const StudentServices = {
+ export const UserServices = {
     createUserIntoDB
 }
