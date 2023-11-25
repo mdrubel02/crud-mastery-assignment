@@ -14,16 +14,22 @@ this is a curd mastery app for the backend api server,and using node js and type
 
 ## Command this project
 
-start project
+start ts-dev
 
 ```bash
   npm run start:dev
 ```
 
+start node
+
+```bash
+  npm run start
+```
+
 Build project
 
 ```bash
-  npm run tsc
+  npm run build
 ```
 
 ## When Create User symbol data structure
@@ -92,3 +98,4 @@ Build project
 ```
 ## 🔗 Links
 [Github Repository Link ](https://github.com/mdrubel02/crud-mastery-assignment)
+[Production Live Link ](https://crud-mastery-assignment-gytnaynjm-mdrubel02.vercel.app/)
