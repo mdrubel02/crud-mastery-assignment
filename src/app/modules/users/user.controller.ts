@@ -34,7 +34,14 @@ const getUser =async (req: Request, res : Response ) => {
             data: result
         })
     } catch (error) {
-        console.log(error)
+      res.status(501).json({
+        seccuss: false,
+        message: "User not found",
+        error:{
+          code : 404,
+          description: "User not found"
+        }
+      })
     }
 }
 const getSingleUser = async (req: Request, res: Response) => {
@@ -47,7 +54,14 @@ const getSingleUser = async (req: Request, res: Response) => {
         data: result,
       })
     } catch (error ) {
-      console.log(error)
+      res.status(501).json({
+        seccuss: false,
+        message: "User not found",
+        error:{
+          code : 404,
+          description: "User not found"
+        }
+      })
     }
   }
 const updateUser = async (req: Request, res: Response) => {
@@ -61,7 +75,14 @@ const updateUser = async (req: Request, res: Response) => {
         data: result,
       })
     } catch (error) {
-      console.log(error)
+      res.status(501).json({
+        seccuss: false,
+        message: "User not found",
+        error:{
+          code : 404,
+          description: "User not found"
+        }
+      })
     }
   }
   const deleteUser = async (req: Request, res: Response) => {
@@ -74,7 +95,14 @@ const updateUser = async (req: Request, res: Response) => {
         data: null
       })
     } catch (error) {
-      console.log(error)
+      res.status(501).json({
+        seccuss: false,
+        message: "User not found",
+        error:{
+          code : 404,
+          description: "User not found"
+        }
+      })
     }
   }
 
@@ -98,11 +126,32 @@ const updateUser = async (req: Request, res: Response) => {
       })
     }
   }
+  const updateUserOrders = async (req : Request, res : Response) =>{
+    try {
+      const id = req.params.userId;
+      const orderData = req.body
+      const result = await UserServices.updateUserOrders(id, orderData)
+      res.status(200).json({
+        success: true,
+        message: "Order create successfully!",
+        data: result
+      })
+    } catch (error) {
+        res.status(500).json({
+          success: false,
+          message: "Orders not found",
+          error: {
+
+          }
+        })
+    }
+  }
 export const UserController = {
     createUser,
     getUser,
     getSingleUser,
     updateUser,
     deleteUser,
-    getUserOrders
+    getUserOrders,
+    updateUserOrders
 }

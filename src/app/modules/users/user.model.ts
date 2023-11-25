@@ -1,8 +1,8 @@
 import { Schema, model} from 'mongoose'
-import { User, UserAddress, UserFullName } from './user.interface'
+import { TUser, TUserAddress, TUserFullName, TUserModel,  } from './user.interface'
 import bcrypt from 'bcryptjs'
 
-const userNameSchema = new Schema<UserFullName>({
+const userNameSchema = new Schema<TUserFullName>({
     firstName: {
         type: String,
         required: true
@@ -13,7 +13,7 @@ const userNameSchema = new Schema<UserFullName>({
     }
 })
 
-const userAddressSchema = new Schema<UserAddress>({
+const userAddressSchema = new Schema<TUserAddress>({
     street: {
         type: String,
         required: true
@@ -40,7 +40,7 @@ const userOrderSchema = new Schema({
     }
 })
 
- const userSchema = new Schema<User>({
+ const userSchema = new Schema<TUser , TUserModel>({
    userId:{
     type: Number,
     unique: true,
@@ -78,7 +78,10 @@ const userOrderSchema = new Schema({
 type:[userOrderSchema]}
 
 }) 
-
+userSchema.statics.isUserExists = async function (id: string) {
+    const existingUser = await UserModel.findOne({ id });
+    return existingUser;
+  };
 userSchema.pre("save", function (next){
     const password = this.password;
     const hashedPassword = bcrypt.hashSync(password, 10);
@@ -86,4 +89,4 @@ userSchema.pre("save", function (next){
     next()
 })
 
-export const UserModel = model<User>('User', userSchema)
+export const UserModel = model<TUser, TUserModel>('User', userSchema)
