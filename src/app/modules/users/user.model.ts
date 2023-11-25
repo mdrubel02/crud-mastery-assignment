@@ -79,7 +79,7 @@ type:[userOrderSchema]}
 
 }) 
 userSchema.statics.isUserExists = async function (id: string) {
-    const existingUser = await UserModel.findOne({ id });
+    const existingUser = await UserModel.findOne({id  });
     return existingUser;
   };
 userSchema.pre("save", function (next){
@@ -88,5 +88,9 @@ userSchema.pre("save", function (next){
     this.password = hashedPassword
     next()
 })
+userSchema.post('save', function (doc, next) {
+    doc.password = '';
+    next();
+  });
 
 export const UserModel = model<TUser, TUserModel>('User', userSchema)

@@ -1,4 +1,4 @@
-import { TUser, TUserOders } from './user.interface';
+import { TUser } from './user.interface';
 import { UserModel } from './user.model';
 
 const createUserIntoDB = async (userData: TUser): Promise<TUser | null> => {
@@ -59,7 +59,7 @@ const getUserOrder = async (id: string) => {
   const result = await UserModel.findById(id).select({ orders: 1, _id: 0 });
   return result;
 };
-const updateUserOrders = async (id: string , orderData: TUserOders)=>{
+const updateUserOrders = async (id: string , orderData: TUser)=>{
   if(await !UserModel.isUserExists(id)){
     throw new Error("User not found")
   }
@@ -69,6 +69,29 @@ const updateUserOrders = async (id: string , orderData: TUserOders)=>{
     })
     return result
 }
+const ordersTotalCost = async (id:string)=>{
+  const singleUser = await UserModel.findById(id);
+  const result = await UserModel.aggregate([
+    {
+      $match: {
+        userId: singleUser?.userId
+      }
+    },
+    {
+      $unwind: "$orders"
+    },
+    {
+      $group: {
+        _id: "$userId",
+        totalPrice: { $sum: { $multiply: ["$orders.price", "$orders.quantity"] } }
+      }
+    },
+    {
+      $project : {totalPrice: 1}
+    }
+  ])
+  return result;
+}
 export const UserServices = {
   createUserIntoDB,
   getAllUserIntoDB,
@@ -76,5 +99,6 @@ export const UserServices = {
   updateUser,
   deleteUser,
   getUserOrder,
-  updateUserOrders
+  updateUserOrders,
+  ordersTotalCost
 };
