@@ -70,6 +70,9 @@ const updateUserOrders = async (id: string , orderData: TUser)=>{
     return result
 }
 const ordersTotalCost = async (id:string)=>{
+  if(await !UserModel.isUserExists(id)){
+    throw new Error("User not found")
+  }
   const singleUser = await UserModel.findById(id);
   const result = await UserModel.aggregate([
     {

@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import { UserServices } from './user.service';
+// import userValidationSchema from './user.validation';
 
 const createUser = async (req: Request, res: Response) => {
   const { user: userData } = req.body;
-  //will call service fun to send this data
   try {
+    // const zodValidetData = userValidationSchema.parse(userData)
     const result = await UserServices.createUserIntoDB(userData);
-    //send response
     res.status(200).json({
       success: true,
       message: 'User created succesfully!',
@@ -138,7 +138,7 @@ const updateUserOrders = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Orders not found',
+      message: 'User not found',
       error: {},
     });
   }
@@ -155,7 +155,7 @@ const ordersTotalCost = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Orders not found',
+      message: 'User not found',
       error: {},
     });
   }
