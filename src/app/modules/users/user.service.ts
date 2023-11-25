@@ -30,10 +30,15 @@ const deleteUser = async (id: string): Promise<User | null> => {
     const result = await UserModel.findByIdAndDelete(id)
     return result
   }
+  const getUserOrder =async (id:string) => {
+    const result = await UserModel.findById(id).select({orders: 1, _id:0})
+    return result;
+  }
  export const UserServices = {
     createUserIntoDB,
     getAllUserIntoDB,
     getSingleUserIntoDB,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserOrder
 }
