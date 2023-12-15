@@ -47,7 +47,7 @@ const userOrderSchema = new Schema({
     required: true
 
    },
-   userName: {
+   username: {
     type:String,
     unique: true,
     required: true
@@ -78,10 +78,10 @@ const userOrderSchema = new Schema({
 type:[userOrderSchema]}
 
 }) 
-userSchema.statics.isUserExists = async function (id: string) {
-    const existingUser = await UserModel.findOne({id  });
-    return existingUser;
-  };
+// userSchema.statics.isUserExists = async function (id: string) {
+//     const existingUser = await UserModel.findOne({id  });
+//     return existingUser;
+//   };
 userSchema.pre("save", function (next){
     const password = this.password;
     const hashedPassword = bcrypt.hashSync(password, 10);

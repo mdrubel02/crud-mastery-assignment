@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { UserServices } from './user.service';
+import { UserModel } from './user.model';
 // import userValidationSchema from './user.validation';
 
 const createUser = async (req: Request, res: Response) => {
@@ -46,10 +47,11 @@ const getUser = async (req: Request, res: Response) => {
 const getSingleUser = async (req: Request, res: Response) => {
   try {
     const id = req.params.userId;
+    console.log(id)
     const result = await UserServices.getSingleUserIntoDB(id);
     res.status(200).json({
       status: 'success',
-      message: 'Single user fetched successfully!',
+      message: 'User fetched successfully!',
       data: result,
     });
   } catch (error) {
@@ -129,7 +131,15 @@ const updateUserOrders = async (req: Request, res: Response) => {
   try {
     const id = req.params.userId;
     const orderData = req.body;
-    await UserServices.updateUserOrders(id, orderData);
+    const user = await UserModel.findById(id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+    user.orders.push(orderData);
+    await UserServices.updateUser(id, user);
     res.status(200).json({
       success: true,
       message: 'Order create successfully!',

@@ -1,9 +1,11 @@
 import  express from 'express';
 import { UserController } from './user.controller';
+import handleValidateRequest from '../../middlwares/validateRequest';
+import userValidationSchema from './user.validation';
 
 
 const router = express.Router();
-router.post('/', UserController.createUser )
+router.post('/', handleValidateRequest(userValidationSchema),UserController.createUser )
 router.get('/', UserController.getUser)
 router.get('/:userId', UserController.getSingleUser)
 router.put('/:userId', UserController.updateUser)
