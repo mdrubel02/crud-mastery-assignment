@@ -8,14 +8,15 @@ const createUserIntoDB = async (userData: TUser): Promise<TUser | null> => {
 
 const getAllUserIntoDB = async () => {
   const result = await UserModel.find({}).select({
-    userName: 1,
+    userId: 1,
+    username: 1,
     fullName: 1,
-    age: 1,
     email: 1,
-    address: 1,
+    isActive: 1,
     hobbies: 1,
-    _id: 0,
-  });
+    address: 1,
+    _id: 0
+  })
   return result;
 };
 const getSingleUserIntoDB = async (id: string): Promise<TUser | null> => {
